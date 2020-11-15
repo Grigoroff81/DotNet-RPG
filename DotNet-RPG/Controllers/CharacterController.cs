@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNet_RPG.DTOs.CharacterDTO;
 using DotNet_RPG.Models;
 using DotNet_RPG.Services.CharacterSrevice;
 using Microsoft.AspNetCore.Http;
@@ -35,9 +36,20 @@ namespace DotNet_RPG.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add (Character newCharacter)
+        public async Task<IActionResult> AddCharacter (AddCharacterDto newCharacter)
         {
             return Ok(await _characterService.AddCharacter(newCharacter));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCharacter (UpdateCharacterDto updatedCharacter)
+        {
+            ServiceResponce<GetCharacterDto> responce = await _characterService.UpdateCharacter(updatedCharacter);
+            if (responce.Data == null)
+            {
+                return NotFound(responce);
+            }
+            return Ok(responce);
         }
     }
 }
