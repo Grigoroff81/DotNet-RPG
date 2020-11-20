@@ -1,4 +1,4 @@
-﻿using DotNet_RPG.Models;
+﻿using DotNetRpg.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +9,12 @@ namespace DotNet_RPG.DTOs.CharacterDTO
     public class UpdateCharacterDto
     {
         public int Id { get; set; }
-        public string Name { get; set; } = "Frodo";
-        public int Hitpoints { get; set; } = 100;
-        public int Strenght { get; set; } = 10;
-        public int Defence { get; set; } = 10;
-        public int Inelligence { get; set; } = 10;
-        public RpgClass Class { get; set; } = RpgClass.Knight;
+        public string Name { get; set; } 
+        public int Hitpoints { get; set; }
+        public int Strenght { get; set; }
+        public int Defence { get; set; }
+        public int Inelligence { get; set; }
+        public int RpgClassId { get; set; }
+        public RpgClass Class { get; set; }
     }
 }

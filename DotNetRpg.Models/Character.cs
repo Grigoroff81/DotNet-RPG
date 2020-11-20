@@ -1,13 +1,13 @@
-﻿using DotNetRpg.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DotNet_RPG.DTOs.CharacterDTO
+namespace DotNetRpg.Models
 {
-    public class AddCharacterDto
+    public class Character
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Hitpoints { get; set; }
         public int Strenght { get; set; }

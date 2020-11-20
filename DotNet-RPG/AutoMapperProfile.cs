@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DotNet_RPG.Models;
 using DotNet_RPG.DTOs.CharacterDTO;
+using DotNetRpg.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

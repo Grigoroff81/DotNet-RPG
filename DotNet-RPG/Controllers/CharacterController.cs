@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNet_RPG.DTOs.CharacterDTO;
-using DotNet_RPG.Models;
 using DotNet_RPG.Services.CharacterSrevice;
+using DotNetRpg.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +15,7 @@ namespace DotNet_RPG.Controllers
     public class CharacterController : ControllerBase
     {
         //private static Character knight = new Character();
-        
+
         private readonly ICharacterService _characterService;
 
         public CharacterController(ICharacterService characterService)
@@ -36,15 +36,26 @@ namespace DotNet_RPG.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCharacter (AddCharacterDto newCharacter)
+        public async Task<IActionResult> AddCharacter(AddCharacterDto newCharacter)
         {
             return Ok(await _characterService.AddCharacter(newCharacter));
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateCharacter (UpdateCharacterDto updatedCharacter)
+        public async Task<IActionResult> UpdateCharacter(UpdateCharacterDto updatedCharacter)
         {
             ServiceResponce<GetCharacterDto> responce = await _characterService.UpdateCharacter(updatedCharacter);
+            if (responce.Data == null)
+            {
+                return NotFound(responce);
+            }
+            return Ok(responce);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            ServiceResponce<List<GetCharacterDto>> responce = await _characterService.DeleteCharacter(id);
             if (responce.Data == null)
             {
                 return NotFound(responce);

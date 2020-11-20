@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DotNet_RPG.Models
+namespace DotNetRpg.Models
 {
     public class ServiceResponce<T>
     {
