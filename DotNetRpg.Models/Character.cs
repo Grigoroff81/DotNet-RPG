@@ -15,5 +15,6 @@ namespace DotNetRpg.Models
         public int Inelligence { get; set; }
         public int RpgClassId { get; set; }
         public RpgClass Class { get; set; }
+        public User User { get; set; }
     }
 }

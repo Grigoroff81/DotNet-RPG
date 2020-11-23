@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DotNet_RPG.Data;
 using DotNet_RPG.Services.CharacterSrevice;
+using DotNetRpg.Data;
+using DotNetRpg.Data.Conracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,8 +33,9 @@ namespace DotNet_RPG
         {
             services.AddDbContext<DotNetRpgContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
-            services.AddScoped<ICharacterService, CharacterService>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<ICharacterService, CharacterService>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

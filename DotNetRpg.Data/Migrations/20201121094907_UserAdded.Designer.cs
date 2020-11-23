@@ -4,14 +4,16 @@ using DotNet_RPG.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DotNetRpg.Data.Migrations
 {
     [DbContext(typeof(DotNetRpgContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201121094907_UserAdded")]
+    partial class UserAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,14 +48,9 @@ namespace DotNetRpg.Data.Migrations
                     b.Property<int>("Strenght")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RpgClassId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Characters");
 
@@ -121,23 +118,12 @@ namespace DotNetRpg.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DotNetRpg.Models.User", "User")
-                        .WithMany("UserChararacters")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Class");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.RpgClass", b =>
                 {
                     b.Navigation("Characters");
-                });
-
-            modelBuilder.Entity("DotNetRpg.Models.User", b =>
-                {
-                    b.Navigation("UserChararacters");
                 });
 #pragma warning restore 612, 618
         }
