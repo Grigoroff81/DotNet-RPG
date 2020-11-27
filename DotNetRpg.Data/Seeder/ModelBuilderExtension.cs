@@ -25,6 +25,7 @@ namespace DotNet_RPG.Data.Seeder
                     WeaponId = 1,
                     WeaponName = "Sword",
                     Damage = 20,
+                    CharacterId = 1,
                 });
             builder.Entity<Character>().HasData(
                 new Character

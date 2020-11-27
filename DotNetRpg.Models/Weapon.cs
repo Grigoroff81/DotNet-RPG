@@ -9,6 +9,7 @@ namespace DotNetRpg.Models
         public int WeaponId { get; set; }
         public string WeaponName { get; set; }
         public int Damage { get; set; }
+        public int CharacterId { get; set; }
         public Character Character { get; set; }
     }
 }

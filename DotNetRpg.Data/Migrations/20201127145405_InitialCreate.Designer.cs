@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotNetRpg.Data.Migrations
 {
     [DbContext(typeof(DotNetRpgContext))]
-    [Migration("20201127143026_InitialCreate")]
+    [Migration("20201127145405_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,9 +59,6 @@ namespace DotNetRpg.Data.Migrations
                     b.HasIndex("RpgClassId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("WeaponId")
-                        .IsUnique();
 
                     b.ToTable("Characters");
 
@@ -125,9 +122,10 @@ namespace DotNetRpg.Data.Migrations
             modelBuilder.Entity("DotNetRpg.Models.Weapon", b =>
                 {
                     b.Property<int>("WeaponId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Damage")
                         .HasColumnType("int");
@@ -143,6 +141,7 @@ namespace DotNetRpg.Data.Migrations
                         new
                         {
                             WeaponId = 1,
+                            CharacterId = 1,
                             Damage = 20,
                             WeaponName = "Sword"
                         });
@@ -160,16 +159,24 @@ namespace DotNetRpg.Data.Migrations
                         .WithMany("UserChararacters")
                         .HasForeignKey("UserId");
 
-                    b.HasOne("DotNetRpg.Models.Weapon", "Weapon")
-                        .WithOne("Character")
-                        .HasForeignKey("DotNetRpg.Models.Character", "WeaponId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Class");
 
                     b.Navigation("User");
+                });
 
+            modelBuilder.Entity("DotNetRpg.Models.Weapon", b =>
+                {
+                    b.HasOne("DotNetRpg.Models.Character", "Character")
+                        .WithOne("Weapon")
+                        .HasForeignKey("DotNetRpg.Models.Weapon", "WeaponId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+                });
+
+            modelBuilder.Entity("DotNetRpg.Models.Character", b =>
+                {
                     b.Navigation("Weapon");
                 });
 
@@ -181,11 +188,6 @@ namespace DotNetRpg.Data.Migrations
             modelBuilder.Entity("DotNetRpg.Models.User", b =>
                 {
                     b.Navigation("UserChararacters");
-                });
-
-            modelBuilder.Entity("DotNetRpg.Models.Weapon", b =>
-                {
-                    b.Navigation("Character");
                 });
 #pragma warning restore 612, 618
         }

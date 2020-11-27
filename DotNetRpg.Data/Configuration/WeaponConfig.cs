@@ -14,6 +14,7 @@ namespace DotNetRpg.Data.Configuration
             builder.HasKey(w => w.WeaponId);
             builder.Property(w => w.WeaponName);
             builder.Property(w => w.Damage);
+            builder.Property(w => w.CharacterId);
         }
     }
 }

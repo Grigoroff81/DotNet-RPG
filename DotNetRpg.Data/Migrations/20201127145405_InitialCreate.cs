@@ -36,20 +36,6 @@ namespace DotNetRpg.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Weapons",
-                columns: table => new
-                {
-                    WeaponId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    WeaponName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Damage = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Weapons", x => x.WeaponId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Characters",
                 columns: table => new
                 {
@@ -79,11 +65,25 @@ namespace DotNetRpg.Data.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Weapons",
+                columns: table => new
+                {
+                    WeaponId = table.Column<int>(type: "int", nullable: false),
+                    WeaponName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Damage = table.Column<int>(type: "int", nullable: false),
+                    CharacterId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Weapons", x => x.WeaponId);
                     table.ForeignKey(
-                        name: "FK_Characters_Weapons_WeaponId",
+                        name: "FK_Weapons_Characters_WeaponId",
                         column: x => x.WeaponId,
-                        principalTable: "Weapons",
-                        principalColumn: "WeaponId",
+                        principalTable: "Characters",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -93,14 +93,14 @@ namespace DotNetRpg.Data.Migrations
                 values: new object[] { 1, "Hobit" });
 
             migrationBuilder.InsertData(
-                table: "Weapons",
-                columns: new[] { "WeaponId", "Damage", "WeaponName" },
-                values: new object[] { 1, 20, "Sword" });
-
-            migrationBuilder.InsertData(
                 table: "Characters",
                 columns: new[] { "Id", "Defence", "Hitpoints", "Inelligence", "Name", "RpgClassId", "Strenght", "UserId", "WeaponId" },
                 values: new object[] { 1, 10, 100, 10, "Frodo", 1, 10, null, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Weapons",
+                columns: new[] { "WeaponId", "CharacterId", "Damage", "WeaponName" },
+                values: new object[] { 1, 1, 20, "Sword" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Characters_RpgClassId",
@@ -111,16 +111,13 @@ namespace DotNetRpg.Data.Migrations
                 name: "IX_Characters_UserId",
                 table: "Characters",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Characters_WeaponId",
-                table: "Characters",
-                column: "WeaponId",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Weapons");
+
             migrationBuilder.DropTable(
                 name: "Characters");
 
@@ -129,9 +126,6 @@ namespace DotNetRpg.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Weapons");
         }
     }
 }
