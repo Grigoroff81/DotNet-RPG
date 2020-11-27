@@ -19,6 +19,13 @@ namespace DotNet_RPG.Data.Seeder
                     RpgClassName = "Hobit"
 
                 });
+            builder.Entity<Weapon>().HasData(
+                new Weapon
+                {
+                    WeaponId = 1,
+                    WeaponName = "Sword",
+                    Damage = 20,
+                });
             builder.Entity<Character>().HasData(
                 new Character
                 {
@@ -29,6 +36,7 @@ namespace DotNet_RPG.Data.Seeder
                     Strenght = 10,
                     Inelligence = 10,
                     RpgClassId = 1,
+                    WeaponId =1,
                 });
         }
     }

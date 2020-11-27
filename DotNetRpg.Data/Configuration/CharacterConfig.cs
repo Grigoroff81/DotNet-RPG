@@ -28,7 +28,9 @@ namespace DotNetRpg.Data.Configuration
             builder.HasOne(character => character.Class)
                 .WithMany(rpgclass => rpgclass.Characters)
                 .HasForeignKey(key => key.RpgClassId);
-                
+
+            builder.Property(w => w.WeaponId);
+
         }
     }
 }

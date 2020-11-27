@@ -4,14 +4,16 @@ using DotNet_RPG.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DotNetRpg.Data.Migrations
 {
     [DbContext(typeof(DotNetRpgContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201127143026_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,11 +51,17 @@ namespace DotNetRpg.Data.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int>("WeaponId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RpgClassId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("WeaponId")
+                        .IsUnique();
 
                     b.ToTable("Characters");
 
@@ -66,7 +74,8 @@ namespace DotNetRpg.Data.Migrations
                             Inelligence = 10,
                             Name = "Frodo",
                             RpgClassId = 1,
-                            Strenght = 10
+                            Strenght = 10,
+                            WeaponId = 1
                         });
                 });
 
@@ -113,6 +122,32 @@ namespace DotNetRpg.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("DotNetRpg.Models.Weapon", b =>
+                {
+                    b.Property<int>("WeaponId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("Damage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WeaponName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("WeaponId");
+
+                    b.ToTable("Weapons");
+
+                    b.HasData(
+                        new
+                        {
+                            WeaponId = 1,
+                            Damage = 20,
+                            WeaponName = "Sword"
+                        });
+                });
+
             modelBuilder.Entity("DotNetRpg.Models.Character", b =>
                 {
                     b.HasOne("DotNetRpg.Models.RpgClass", "Class")
@@ -125,9 +160,17 @@ namespace DotNetRpg.Data.Migrations
                         .WithMany("UserChararacters")
                         .HasForeignKey("UserId");
 
+                    b.HasOne("DotNetRpg.Models.Weapon", "Weapon")
+                        .WithOne("Character")
+                        .HasForeignKey("DotNetRpg.Models.Character", "WeaponId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Class");
 
                     b.Navigation("User");
+
+                    b.Navigation("Weapon");
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.RpgClass", b =>
@@ -138,6 +181,11 @@ namespace DotNetRpg.Data.Migrations
             modelBuilder.Entity("DotNetRpg.Models.User", b =>
                 {
                     b.Navigation("UserChararacters");
+                });
+
+            modelBuilder.Entity("DotNetRpg.Models.Weapon", b =>
+                {
+                    b.Navigation("Character");
                 });
 #pragma warning restore 612, 618
         }
