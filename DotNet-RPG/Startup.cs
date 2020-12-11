@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNet_RPG.Data;
+using DotNet_RPG.Services.CharacterSkillService;
 using DotNet_RPG.Services.CharacterSrevice;
+using DotNet_RPG.Services.WeaponService;
 using DotNetRpg.Data;
 using DotNetRpg.Data.Conracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,10 +38,14 @@ namespace DotNet_RPG
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DotNetRpgContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+            services.AddControllersWithViews()
+                 .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<ICharacterService, CharacterService>();
+            services.AddScoped<IWeaponService, WeaponService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<ICharacterSkillService, CharacterSkillService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

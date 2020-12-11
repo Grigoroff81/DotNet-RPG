@@ -20,6 +20,8 @@ namespace DotNet_RPG.Data
         public DbSet<RpgClass> Classes { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Weapon> Weapons  { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<CharacterSkill> ChararacterSkills { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
@@ -32,6 +34,7 @@ namespace DotNet_RPG.Data
             modelBuilder.ApplyConfiguration(new CharacterConfig());
             modelBuilder.ApplyConfiguration(new RpgClassConfig());
             modelBuilder.ApplyConfiguration(new WeaponConfig());
+            modelBuilder.ApplyConfiguration(new CharacterSkillConfig());
             modelBuilder.Seeder();
             base.OnModelCreating(modelBuilder);
         }

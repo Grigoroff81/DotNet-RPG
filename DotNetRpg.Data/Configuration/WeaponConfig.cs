@@ -14,7 +14,10 @@ namespace DotNetRpg.Data.Configuration
             builder.HasKey(w => w.WeaponId);
             builder.Property(w => w.WeaponName);
             builder.Property(w => w.Damage);
-            builder.Property(w => w.CharacterId);
+
+            //builder.HasOne(weapon => weapon.Character)
+            //    .WithOne(character => character.Weapon)
+            //    .HasForeignKey<Character>(w => w.WeaponId);
         }
     }
 }

@@ -4,14 +4,16 @@ using DotNet_RPG.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DotNetRpg.Data.Migrations
 {
     [DbContext(typeof(DotNetRpgContext))]
-    partial class DotNetRpgContextModelSnapshot : ModelSnapshot
+    [Migration("20201208163217_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,21 +72,6 @@ namespace DotNetRpg.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DotNetRpg.Models.CharacterSkill", b =>
-                {
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CharacterId", "SkillId");
-
-                    b.HasIndex("SkillId");
-
-                    b.ToTable("ChararacterSkills");
-                });
-
             modelBuilder.Entity("DotNetRpg.Models.RpgClass", b =>
                 {
                     b.Property<int>("RpgClassId")
@@ -105,24 +92,6 @@ namespace DotNetRpg.Data.Migrations
                             RpgClassId = 1,
                             RpgClassName = "Hobit"
                         });
-                });
-
-            modelBuilder.Entity("DotNetRpg.Models.Skill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("Damage")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.User", b =>
@@ -187,25 +156,6 @@ namespace DotNetRpg.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DotNetRpg.Models.CharacterSkill", b =>
-                {
-                    b.HasOne("DotNetRpg.Models.Character", "Character")
-                        .WithMany("CharacterSkills")
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DotNetRpg.Models.Skill", "Skill")
-                        .WithMany("CharacterSkills")
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Character");
-
-                    b.Navigation("Skill");
-                });
-
             modelBuilder.Entity("DotNetRpg.Models.Weapon", b =>
                 {
                     b.HasOne("DotNetRpg.Models.Character", "Character")
@@ -219,19 +169,12 @@ namespace DotNetRpg.Data.Migrations
 
             modelBuilder.Entity("DotNetRpg.Models.Character", b =>
                 {
-                    b.Navigation("CharacterSkills");
-
                     b.Navigation("Weapon");
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.RpgClass", b =>
                 {
                     b.Navigation("Characters");
-                });
-
-            modelBuilder.Entity("DotNetRpg.Models.Skill", b =>
-                {
-                    b.Navigation("CharacterSkills");
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.User", b =>

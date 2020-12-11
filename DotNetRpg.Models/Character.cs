@@ -16,7 +16,8 @@ namespace DotNetRpg.Models
         public int RpgClassId { get; set; }
         public RpgClass Class { get; set; }
         public User User { get; set; }
-        public int WeaponId { get; set; }
+        //public int? WeaponId { get; set; }
         public Weapon Weapon { get; set; }
+        public List<CharacterSkill> CharacterSkills { get; set; }
     }
 }
