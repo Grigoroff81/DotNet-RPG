@@ -7,6 +7,7 @@ using AutoMapper;
 using DotNet_RPG.Data;
 using DotNet_RPG.Services.CharacterSkillService;
 using DotNet_RPG.Services.CharacterSrevice;
+using DotNet_RPG.Services.FightService;
 using DotNet_RPG.Services.WeaponService;
 using DotNetRpg.Data;
 using DotNetRpg.Data.Conracts;
@@ -46,6 +47,7 @@ namespace DotNet_RPG
             services.AddScoped<IWeaponService, WeaponService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<ICharacterSkillService, CharacterSkillService>();
+            services.AddScoped<IFightService, FightService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

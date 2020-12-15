@@ -22,5 +22,8 @@ namespace DotNet_RPG.DTOs.CharacterDTO
         public int WeaponId { get; set; }
         public GetWeaponDto Weapon { get; set; }
         public List<GetSkillDto> Skills { get; set; }
+        public int Fights { get; set; }
+        public int Victories { get; set; }
+        public int Defeats { get; set; }
     }
 }
