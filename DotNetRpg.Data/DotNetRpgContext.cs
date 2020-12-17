@@ -35,6 +35,7 @@ namespace DotNet_RPG.Data
             modelBuilder.ApplyConfiguration(new RpgClassConfig());
             modelBuilder.ApplyConfiguration(new WeaponConfig());
             modelBuilder.ApplyConfiguration(new CharacterSkillConfig());
+            modelBuilder.ApplyConfiguration(new UserConfig());
             modelBuilder.Seeder();
             base.OnModelCreating(modelBuilder);
         }
