@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotNetRpg.Data.Migrations
 {
     [DbContext(typeof(DotNetRpgContext))]
-    [Migration("20201211193900_SkillAdded")]
-    partial class SkillAdded
+    [Migration("20201218013536_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,13 @@ namespace DotNetRpg.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("Defeats")
+                        .HasColumnType("int");
+
                     b.Property<int>("Defence")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fights")
                         .HasColumnType("int");
 
                     b.Property<int>("Hitpoints")
@@ -48,7 +54,10 @@ namespace DotNetRpg.Data.Migrations
                     b.Property<int>("Strenght")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Victories")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -58,18 +67,6 @@ namespace DotNetRpg.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Characters");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Defence = 10,
-                            Hitpoints = 100,
-                            Inelligence = 10,
-                            Name = "Frodo",
-                            RpgClassId = 1,
-                            Strenght = 10
-                        });
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.CharacterSkill", b =>
@@ -100,13 +97,6 @@ namespace DotNetRpg.Data.Migrations
                     b.HasKey("RpgClassId");
 
                     b.ToTable("Classes");
-
-                    b.HasData(
-                        new
-                        {
-                            RpgClassId = 1,
-                            RpgClassName = "Hobit"
-                        });
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.Skill", b =>
@@ -125,6 +115,26 @@ namespace DotNetRpg.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Damage = 30,
+                            Name = "Fireball"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Damage = 20,
+                            Name = "Frenzy"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Damage = 50,
+                            Name = "Blizzrad"
+                        });
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.User", b =>
@@ -139,6 +149,12 @@ namespace DotNetRpg.Data.Migrations
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Player");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
@@ -182,7 +198,9 @@ namespace DotNetRpg.Data.Migrations
 
                     b.HasOne("DotNetRpg.Models.User", "User")
                         .WithMany("UserChararacters")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Class");
 

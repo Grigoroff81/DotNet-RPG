@@ -29,8 +29,7 @@ namespace DotNet_RPG.Services.CharacterSrevice
             _context = context;
             _contextAccessor = contextAccessor;
         }
-
-        private int GetUserId() => int.Parse(_contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+       
         public async Task<ServiceResponce<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
         {
             ServiceResponce<List<GetCharacterDto>> serviceResponce = new ServiceResponce<List<GetCharacterDto>>();
@@ -44,11 +43,13 @@ namespace DotNet_RPG.Services.CharacterSrevice
             return serviceResponce;
         }
 
-
         public async Task<ServiceResponce<List<GetCharacterDto>>> GetAllCharacters()
         {
             ServiceResponce<List<GetCharacterDto>> serviceResponce = new ServiceResponce<List<GetCharacterDto>>();
-            List<Character> dbCharacters = await _context.Characters.Include(c=>c.Class)
+            List<Character> dbCharacters = 
+                GetUserRole().Equals("Admin") ?
+                await _context.Characters.ToListAsync() : 
+                await _context.Characters.Include(c=>c.Class)
                 .Include(c => c.CharacterSkills).ThenInclude(cs => cs.Skill)
                 .Include(c=>c.Weapon).Where(c => c.User.Id == GetUserId()).ToListAsync();
             serviceResponce.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
@@ -132,5 +133,8 @@ namespace DotNet_RPG.Services.CharacterSrevice
 
             return serviceResponce;
         }
+        private int GetUserId() => int.Parse(_contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        private string GetUserRole() => _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
     }
 }

@@ -144,8 +144,8 @@ namespace DotNet_RPG.Services.FightService
                             damage = DoSkillAttack(attacker, opponent, attacker.CharacterSkills[randomSkill]);
                         }
 
-                        responce.Data.Log.Add($"{attacker.Name} attacks {opponent.Name} using {attackUsed}" +
-                            $"with {(damage >= 0 ? damage : 0) } damage.");
+                        responce.Data.Log.Add($"{attacker.Name} attacks {opponent.Name} using {attackUsed} " +
+                            $" with {(damage >= 0 ? damage : 0) } damage.");
 
                         if (opponent.Hitpoints <= 0)
                         {

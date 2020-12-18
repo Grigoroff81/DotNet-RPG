@@ -52,7 +52,7 @@ namespace DotNetRpg.Data.Migrations
                     b.Property<int>("Strenght")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<int>("Victories")
@@ -77,7 +77,22 @@ namespace DotNetRpg.Data.Migrations
                             Inelligence = 10,
                             Name = "Frodo",
                             RpgClassId = 1,
+                            Strenght = 15,
+                            UserId = 1,
+                            Victories = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Defeats = 0,
+                            Defence = 10,
+                            Fights = 0,
+                            Hitpoints = 100,
+                            Inelligence = 20,
+                            Name = "Gandalf",
+                            RpgClassId = 2,
                             Strenght = 10,
+                            UserId = 2,
                             Victories = 0
                         });
                 });
@@ -95,6 +110,23 @@ namespace DotNetRpg.Data.Migrations
                     b.HasIndex("SkillId");
 
                     b.ToTable("ChararacterSkills");
+
+                    b.HasData(
+                        new
+                        {
+                            CharacterId = 1,
+                            SkillId = 2
+                        },
+                        new
+                        {
+                            CharacterId = 2,
+                            SkillId = 1
+                        },
+                        new
+                        {
+                            CharacterId = 2,
+                            SkillId = 3
+                        });
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.RpgClass", b =>
@@ -115,7 +147,12 @@ namespace DotNetRpg.Data.Migrations
                         new
                         {
                             RpgClassId = 1,
-                            RpgClassName = "Hobit"
+                            RpgClassName = "Hobbit"
+                        },
+                        new
+                        {
+                            RpgClassId = 2,
+                            RpgClassName = "Wizzard"
                         });
                 });
 
@@ -135,6 +172,26 @@ namespace DotNetRpg.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Damage = 30,
+                            Name = "Fireball"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Damage = 20,
+                            Name = "Frenzy"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Damage = 50,
+                            Name = "Blizzrad"
+                        });
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.User", b =>
@@ -162,6 +219,22 @@ namespace DotNetRpg.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PasswordHash = new byte[] { 119, 198, 136, 253, 245, 137, 214, 75, 190, 190, 133, 133, 222, 192, 254, 146, 140, 155, 38, 26, 85, 182, 7, 151, 157, 193, 201, 77, 129, 107, 26, 218, 167, 131, 215, 96, 234, 106, 32, 86, 153, 135, 155, 11, 92, 53, 143, 29, 148, 202, 131, 4, 5, 180, 50, 214, 239, 19, 58, 93, 48, 18, 146, 65 },
+                            PasswordSalt = new byte[] { 23, 9, 43, 188, 63, 209, 149, 111, 67, 95, 114, 131, 207, 99, 138, 9, 91, 195, 25, 147, 39, 206, 64, 118, 160, 167, 169, 30, 58, 224, 144, 165, 120, 46, 34, 209, 87, 141, 205, 77, 237, 207, 90, 87, 225, 218, 12, 116, 118, 218, 34, 155, 45, 27, 254, 154, 157, 2, 178, 76, 225, 250, 30, 171, 192, 225, 243, 224, 1, 141, 89, 223, 90, 6, 115, 18, 200, 87, 25, 204, 85, 112, 59, 51, 53, 139, 141, 226, 149, 196, 159, 45, 224, 71, 66, 2, 238, 194, 163, 183, 158, 174, 14, 253, 163, 145, 102, 158, 97, 131, 144, 226, 240, 80, 102, 123, 7, 32, 11, 150, 65, 59, 197, 156, 148, 155, 225, 94 },
+                            Username = "Ivo"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            PasswordHash = new byte[] { 119, 198, 136, 253, 245, 137, 214, 75, 190, 190, 133, 133, 222, 192, 254, 146, 140, 155, 38, 26, 85, 182, 7, 151, 157, 193, 201, 77, 129, 107, 26, 218, 167, 131, 215, 96, 234, 106, 32, 86, 153, 135, 155, 11, 92, 53, 143, 29, 148, 202, 131, 4, 5, 180, 50, 214, 239, 19, 58, 93, 48, 18, 146, 65 },
+                            PasswordSalt = new byte[] { 23, 9, 43, 188, 63, 209, 149, 111, 67, 95, 114, 131, 207, 99, 138, 9, 91, 195, 25, 147, 39, 206, 64, 118, 160, 167, 169, 30, 58, 224, 144, 165, 120, 46, 34, 209, 87, 141, 205, 77, 237, 207, 90, 87, 225, 218, 12, 116, 118, 218, 34, 155, 45, 27, 254, 154, 157, 2, 178, 76, 225, 250, 30, 171, 192, 225, 243, 224, 1, 141, 89, 223, 90, 6, 115, 18, 200, 87, 25, 204, 85, 112, 59, 51, 53, 139, 141, 226, 149, 196, 159, 45, 224, 71, 66, 2, 238, 194, 163, 183, 158, 174, 14, 253, 163, 145, 102, 158, 97, 131, 144, 226, 240, 80, 102, 123, 7, 32, 11, 150, 65, 59, 197, 156, 148, 155, 225, 94 },
+                            Username = "Desy"
+                        });
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.Weapon", b =>
@@ -186,6 +259,22 @@ namespace DotNetRpg.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Weapons");
+
+                    b.HasData(
+                        new
+                        {
+                            WeaponId = 1,
+                            CharacterId = 1,
+                            Damage = 20,
+                            WeaponName = "Sword"
+                        },
+                        new
+                        {
+                            WeaponId = 2,
+                            CharacterId = 2,
+                            Damage = 30,
+                            WeaponName = "Wand"
+                        });
                 });
 
             modelBuilder.Entity("DotNetRpg.Models.Character", b =>
@@ -198,7 +287,9 @@ namespace DotNetRpg.Data.Migrations
 
                     b.HasOne("DotNetRpg.Models.User", "User")
                         .WithMany("UserChararacters")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Class");
 
